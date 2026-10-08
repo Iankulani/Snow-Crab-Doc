@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>❄️ snow_crab_v1 · documentation</title>
+  <!-- Font Awesome 6 for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* ---------- GLOBAL RESET & THEME (blue, white, red, yellow) ---------- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', 'Comic Sans MS', 'Chalkboard SE', 'Fredoka', cursive, sans-serif;
+    }
+
+    :root {
+      --blue: #0284c7;
+      --dark-blue: #015c8b;
+      --deep-blue: #023b5e;
+      --light-blue: #e6f7ff;
+      --mid-blue: #b3e0ff;
+      --white: #ffffff;
+      --red: #e63946;
+      --dark-red: #b71c2c;
+      --yellow: #ffd60a;
+      --dark-yellow: #f4a300;
+    }
+
+    body {
+      background: linear-gradient(145deg, var(--light-blue) 0%, var(--white) 100%);
+      color: var(--deep-blue);
+      line-height: 1.6;
+      padding: 2rem 1rem;
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* floating bubbles background */
+    .bubble-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .bubble {
+      position: absolute;
+      border-radius: 50%;
+      animation: floatBubble 18s infinite ease-in-out;
+    }
+
+    @keyframes floatBubble {
+      0% { transform: translateY(0) scale(1); opacity: 0.3; }
+      50% { transform: translateY(-40px) scale(1.2); opacity: 0.6; }
+      100% { transform: translateY(0) scale(1); opacity: 0.3; }
+    }
+
+    /* ---------- MAIN CONTAINER ---------- */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 10;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(8px);
+      border-radius: 60px 60px 40px 40px;
+      padding: 2.5rem 2rem;
+      box-shadow: 0 25px 40px -10px rgba(0, 100, 150, 0.3),
+                  0 0 0 4px var(--mid-blue) inset,
+                  0 0 0 8px var(--white) inset;
+      border: 4px dashed var(--blue);
+    }
+
+    /* ---------- TYPOGRAPHY ---------- */
+    h1, h2, h3 {
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      text-shadow: 2px 2px 0 #cceeff;
+    }
+
+    h1 {
+      font-size: 3.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      color: var(--dark-blue);
+      margin-bottom: 0.5rem;
+      animation: wobble 5s infinite ease-in-out;
+    }
+
+    @keyframes wobble {
+      0%, 100% { transform: rotate(0deg); }
+      25% { transform: rotate(1deg); }
+      75% { transform: rotate(-1deg); }
+    }
+
+    .crab-emoji {
+      font-size: 3rem;
+      filter: drop-shadow(0 6px 0 #9ad0ff);
+    }
+
+    .subhead {
+      font-size: 1.3rem;
+      background: linear-gradient(90deg, var(--light-blue), var(--white));
+      display: inline-block;
+      padding: 0.4rem 2rem;
+      border-radius: 100px;
+      margin-bottom: 2rem;
+      border: 3px solid var(--white);
+      box-shadow: 0 6px 0 var(--blue);
+      color: var(--dark-blue);
+      font-weight: 600;
+      text-align: center;
+      width: 100%;
+    }
+
+    h2 {
+      font-size: 2.2rem;
+      margin: 2rem 0 1rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 4px dotted var(--blue);
+      padding-bottom: 10px;
+      color: var(--dark-blue);
+    }
+
+    h2 i {
+      color: var(--blue);
+      background: var(--white);
+      border-radius: 50%;
+      padding: 12px;
+      box-shadow: 0 6px 0 var(--mid-blue);
+      font-size: 1.8rem;
+    }
+
+    /* ---------- CARDS ---------- */
+    .card {
+      background: var(--white);
+      border-radius: 40px;
+      padding: 1.8rem 2rem;
+      margin: 1.8rem 0;
+      box-shadow: 0 15px 0 var(--mid-blue), 0 20px 30px -10px rgba(0, 100, 150, 0.3);
+      border: 3px solid #e0f2fe;
+      transition: transform 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    /* colored accent cards */
+    .card.red-accent {
+      border-color: var(--red);
+      box-shadow: 0 15px 0 #ffb3ba, 0 20px 30px -10px rgba(230, 57, 70, 0.3);
+    }
+
+    .card.yellow-accent {
+      border-color: var(--yellow);
+      box-shadow: 0 15px 0 #fff3b0, 0 20px 30px -10px rgba(255, 214, 10, 0.3);
+    }
+
+    /* ---------- GIT CLONE SECTION (HIGHLIGHTED) ---------- */
+    .git-clone-section {
+      background: linear-gradient(135deg, #ffffff 0%, #f0faff 100%);
+      border: 4px solid var(--red);
+      border-radius: 50px;
+      padding: 2rem;
+      margin: 2rem 0;
+      box-shadow: 0 18px 0 var(--yellow), 0 25px 35px -10px rgba(230, 57, 70, 0.4);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .git-clone-section::before {
+      content: "★";
+      position: absolute;
+      top: -20px;
+      right: -20px;
+      font-size: 8rem;
+      color: var(--yellow);
+      opacity: 0.3;
+      transform: rotate(15deg);
+    }
+
+    .git-clone-section h2 {
+      border-bottom: 4px dashed var(--red);
+      color: var(--dark-red);
+      margin-top: 0;
+    }
+
+    .git-clone-section h2 i {
+      color: var(--white);
+      background: var(--red);
+      box-shadow: 0 6px 0 var(--dark-red);
+    }
+
+    .git-badge {
+      display: inline-block;
+      background: var(--red);
+      color: var(--white);
+      padding: 0.3rem 1.2rem;
+      border-radius: 100px;
+      font-size: 0.9rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+      box-shadow: 0 4px 0 var(--dark-red);
+      letter-spacing: 1px;
+    }
+
+    /* ---------- DESCRIPTION ---------- */
+    .description-text {
+      font-size: 1.2rem;
+      line-height: 1.8;
+      color: var(--deep-blue);
+    }
+
+    .description-text i {
+      color: var(--blue);
+      margin-right: 8px;
+    }
+
+    /* ---------- STEP LIST ---------- */
+    .step-list {
+      list-style: none;
+      counter-reset: step-counter;
+      margin-top: 1rem;
+    }
+
+    .step-list li {
+      counter-increment: step-counter;
+      display: flex;
+      align-items: flex-start;
+      gap: 18px;
+      margin-bottom: 1.8rem;
+      background: #f0faff;
+      padding: 1.2rem 1.5rem;
+      border-radius: 30px;
+      border: 3px solid var(--mid-blue);
+      font-size: 1.15rem;
+      transition: all 0.2s;
+    }
+
+    .step-list li:hover {
+      background: #d9f0ff;
+      border-color: var(--blue);
+      transform: translateX(5px);
+    }
+
+    /* red accent for git steps */
+    .git-step-list li {
+      border-color: #ffb3ba;
+      background: #fff5f5;
+    }
+
+    .git-step-list li:hover {
+      background: #ffe3e6;
+      border-color: var(--red);
+    }
+
+    .step-list li::before {
+      content: counter(step-counter);
+      background: var(--blue);
+      color: var(--white);
+      font-weight: bold;
+      font-size: 1.8rem;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 6px 0 var(--deep-blue);
+      flex-shrink: 0;
+      margin-top: 4px;
+    }
+
+    .git-step-list li::before {
+      background: var(--red);
+      box-shadow: 0 6px 0 var(--dark-red);
+    }
+
+    .code-block {
+      background: var(--deep-blue);
+      color: #e0f2fe;
+      padding: 1.2rem 1.8rem;
+      border-radius: 30px;
+      font-family: 'Courier New', monospace;
+      font-size: 1.2rem;
+      letter-spacing: 0.5px;
+      border: 4px solid var(--white);
+      box-shadow: 0 8px 0 var(--dark-blue);
+      margin: 1rem 0;
+      word-break: break-word;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      position: relative;
+      overflow-x: auto;
+    }
+
+    .code-block i {
+      color: var(--yellow);
+      font-size: 1.8rem;
+    }
+
+    .git-code {
+      background: #1a1a2e;
+      border-color: var(--yellow);
+      box-shadow: 0 8px 0 var(--dark-yellow);
+    }
+
+    .git-code i {
+      color: var(--red);
+    }
+
+    .inline-code {
+      background: var(--light-blue);
+      padding: 0.2rem 0.8rem;
+      border-radius: 40px;
+      font-family: 'Courier New', monospace;
+      font-weight: bold;
+      color: var(--dark-blue);
+      border: 2px solid var(--blue);
+      font-size: 1.1rem;
+    }
+
+    /* copy button */
+    .copy-btn {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: var(--yellow);
+      color: var(--deep-blue);
+      border: none;
+      border-radius: 15px;
+      padding: 0.5rem 0.9rem;
+      font-size: 0.9rem;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 4px 0 var(--dark-yellow);
+      transition: all 0.15s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .copy-btn:hover {
+      background: #ffe14d;
+      transform: translateY(-50%) scale(1.05);
+    }
+
+    .copy-btn:active {
+      transform: translateY(-45%) scale(0.97);
+      box-shadow: 0 2px 0 var(--dark-yellow);
+    }
+
+    .copy-btn.copied {
+      background: #b9f6ca;
+      box-shadow: 0 4px 0 #00c853;
+    }
+
+    /* ---------- FEATURE GRID ---------- */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+      margin: 1.5rem 0;
+    }
+
+    .feature-item {
+      background: #f0faff;
+      border-radius: 30px;
+      padding: 1.5rem;
+      text-align: center;
+      border: 3px solid var(--mid-blue);
+      box-shadow: 0 8px 0 var(--mid-blue);
+      transition: all 0.2s;
+    }
+
+    .feature-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 0 var(--blue);
+    }
+
+    .feature-item:nth-child(3n+1) {
+      border-color: var(--blue);
+      box-shadow: 0 8px 0 var(--mid-blue);
+    }
+
+    .feature-item:nth-child(3n+2) {
+      border-color: var(--red);
+      box-shadow: 0 8px 0 #ffb3ba;
+    }
+
+    .feature-item:nth-child(3n+3) {
+      border-color: var(--yellow);
+      box-shadow: 0 8px 0 #fff3b0;
+    }
+
+    .feature-item i {
+      font-size: 2.5rem;
+      margin-bottom: 0.8rem;
+      display: block;
+    }
+
+    .feature-item:nth-child(3n+1) i { color: var(--blue); }
+    .feature-item:nth-child(3n+2) i { color: var(--red); }
+    .feature-item:nth-child(3n+3) i { color: var(--dark-yellow); }
+
+    .feature-item h4 {
+      color: var(--dark-blue);
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .feature-item p {
+      font-size: 0.95rem;
+      color: #2b6f96;
+    }
+
+    /* ---------- SOCIAL SECTION ---------- */
+    .social-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.5rem;
+      margin: 2rem 0 1rem;
+    }
+
+    .social-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: var(--white);
+      width: 95px;
+      height: 95px;
+      border-radius: 30px;
+      color: var(--dark-blue);
+      font-size: 2.5rem;
+      box-shadow: 0 10px 0 var(--mid-blue), 0 12px 15px -5px rgba(0, 70, 120, 0.3);
+      transition: all 0.2s ease;
+      text-decoration: none;
+      border: 3px solid var(--light-blue);
+      position: relative;
+    }
+
+    .social-btn span {
+      font-size: 0.7rem;
+      font-weight: 600;
+      margin-top: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      background: var(--light-blue);
+      padding: 2px 10px;
+      border-radius: 40px;
+      color: var(--dark-blue);
+    }
+
+    .social-btn:hover {
+      transform: translateY(-8px) scale(1.03);
+      background: #f0faff;
+      box-shadow: 0 15px 0 var(--blue), 0 20px 20px -8px var(--blue);
+    }
+
+    .social-btn.github:hover { color: #24292e; box-shadow: 0 15px 0 #b3e0ff, 0 20px 20px -8px #24292e; }
+    .social-btn.discord:hover { color: #5865F2; box-shadow: 0 15px 0 #c3c9ff, 0 20px 20px -8px #5865F2; }
+    .social-btn.facebook:hover { color: #1877F2; box-shadow: 0 15px 0 #b3d4ff, 0 20px 20px -8px #1877F2; }
+    .social-btn.telegram:hover { color: #26A5E4; box-shadow: 0 15px 0 #b3e4ff, 0 20px 20px -8px #26A5E4; }
+    .social-btn.slack:hover { color: #4A154B; box-shadow: 0 15px 0 #e0c3e0, 0 20px 20px -8px #4A154B; }
+    .social-btn.reddit:hover { color: #FF4500; box-shadow: 0 15px 0 #ffc9b3, 0 20px 20px -8px #FF4500; }
+    .social-btn.x:hover { color: #000000; box-shadow: 0 15px 0 #d4d4d4, 0 20px 20px -8px #000000; }
+    .social-btn.pinterest:hover { color: #E60023; box-shadow: 0 15px 0 #ffb3c1, 0 20px 20px -8px #E60023; }
+
+    /* ---------- FOOTER ---------- */
+    footer {
+      text-align: center;
+      margin-top: 3.5rem;
+      font-size: 1rem;
+      color: #2b6f96;
+      border-top: 4px dashed var(--blue);
+      padding-top: 2rem;
+      font-weight: 600;
+    }
+
+    .crab-wave {
+      display: inline-block;
+      animation: wave 2s infinite;
+      transform-origin: bottom;
+    }
+
+    @keyframes wave {
+      0% { transform: rotate(0deg); }
+      30% { transform: rotate(15deg); }
+      60% { transform: rotate(-10deg); }
+      100% { transform: rotate(0deg); }
+    }
+
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width: 680px) {
+      h1 { font-size: 2.2rem; }
+      h2 { font-size: 1.6rem; }
+      .container { padding: 1.5rem 1rem; }
+      .step-list li { flex-direction: column; align-items: center; text-align: center; }
+      .step-list li::before { margin-bottom: 8px; }
+      .code-block { font-size: 1rem; padding-right: 4rem; }
+      .social-btn { width: 75px; height: 75px; font-size: 2rem; }
+      .feature-grid { grid-template-columns: 1fr; }
+      .copy-btn { padding: 0.4rem 0.7rem; font-size: 0.8rem; }
+    }
+
+    /* JS animations */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .floating-crab {
+      position: absolute;
+      right: 3%;
+      top: 12%;
+      font-size: 4rem;
+      opacity: 0.15;
+      z-index: 0;
+      animation: floatCrazy 12s infinite alternate;
+      pointer-events: none;
+    }
+
+    @keyframes floatCrazy {
+      0% { transform: translate(0, 0) rotate(0deg); }
+      100% { transform: translate(-30px, 40px) rotate(20deg); }
+    }
+
+    /* warning banner */
+    .warning-banner {
+      background: #fff3b0;
+      border: 3px solid var(--yellow);
+      border-radius: 30px;
+      padding: 1.2rem 2rem;
+      margin: 1.5rem 0;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      font-weight: 600;
+      color: #7a4f00;
+      box-shadow: 0 8px 0 #ffd60a;
+    }
+
+    .warning-banner i {
+      font-size: 2rem;
+      color: var(--red);
+    }
+
+    /* Git feature ribbon */
+    .git-ribbon {
+      background: var(--red);
+      color: var(--white);
+      padding: 0.5rem 1.5rem;
+      border-radius: 0 0 20px 20px;
+      font-weight: bold;
+      font-size: 1rem;
+      display: inline-block;
+      box-shadow: 0 4px 0 var(--dark-red);
+      letter-spacing: 1px;
+    }
+  </style>
+</head>
+<body>
+  <!-- animated background bubbles -->
+  <div class="bubble-bg" id="bubbleBg"></div>
+  <div class="floating-crab">🦀❄️</div>
+
+  <div class="container">
+    <!-- HEADER -->
+    <header style="text-align: center; position: relative;">
+      <h1>
+        <span class="crab-emoji">🦀</span> snow_crab_v1 
+        <span style="font-size: 2rem;">❄️</span>
+      </h1>
+      <div class="subhead">
+        <i class="fas fa-shield-halved" style="margin-right: 8px;"></i> 
+        Ultimate Cybersecurity Command & Control Platform · v1.0.0
+      </div>
+    </header>
+
+    <!-- DESCRIPTION -->
+    <div class="card fade-in" style="background: #ffffffdd;">
+      <h2 style="border-bottom: none; margin-top: 0; font-size: 1.8rem;">
+        <i class="fas fa-snowflake"></i> What is snow_crab_v1?
+      </h2>
+      <div class="description-text">
+        <p style="margin-bottom: 1rem;">
+          <i class="fas fa-crab"></i>
+          <strong>snow_crab_v1</strong> is a powerful, all-in-one cybersecurity automation platform 
+          created by <strong>Accurate Cyber Defense </strong>. It combines multi-platform bot integration, 
+          a stunning blue-themed web dashboard, advanced network scanning, social engineering tools, 
+          and much more — all wrapped in a friendly, playful interface. 🦀❄️
+        </p>
+        <p style="margin-bottom: 1rem;">
+          <i class="fas fa-network-wired"></i>
+          It supports <strong>Discord, Telegram, WhatsApp, Slack, Google Chat, Signal, iMessage, and Web</strong> 
+          platforms, making it a true command & control hub for cybersecurity professionals and enthusiasts.
+        </p>
+        <p>
+          <i class="fas fa-lock"></i>
+          <strong>⚠️ Disclaimer:</strong> This tool is intended for authorized security testing and educational 
+          purposes only. Always ensure you have explicit permission before testing any system.
+        </p>
+      </div>
+    </div>
+
+    <!-- ============================================= -->
+    <!-- ⭐ GIT CLONE SECTION (PROMINENT) ⭐           -->
+    <!-- ============================================= -->
+    <div class="git-clone-section fade-in" id="gitClone">
+      <div class="git-ribbon">
+        <i class="fas fa-code-branch"></i> RECOMMENDED INSTALL METHOD
+      </div>
+      <h2 style="border-bottom: 4px dashed var(--red); color: var(--dark-red); margin-top: 1rem;">
+        <i class="fab fa-git-alt"></i> Git Clone Installation
+      </h2>
+      <p style="font-size: 1.15rem; margin-bottom: 1.2rem; color: var(--deep-blue);">
+        <i class="fas fa-star" style="color: var(--yellow);"></i>
+        The easiest way to get the latest <strong>snow_crab_v1</strong> source code is by cloning 
+        the official repository directly from GitHub.
+      </p>
+
+      <ul class="step-list git-step-list">
+        <li>
+          <div>
+            <strong>📥 Clone the repository</strong><br>
+            Open your terminal and run:
+            <div class="code-block git-code" id="cloneBlock">
+              <i class="fab fa-git-alt"></i> 
+              <span>git clone https://github.com/Iankulani/snow_crab_v1.git</span>
+              <button class="copy-btn" onclick="copyCode('cloneBlock', this)">
+                <i class="fas fa-copy"></i> Copy
+              </button>
+            </div>
+          </div>
+        </li>
+
+        <li>
+          <div>
+            <strong>📁 Navigate into the directory</strong><br>
+            Move into the cloned folder:
+            <div class="code-block git-code" id="cdBlock">
+              <i class="fas fa-folder-open"></i> 
+              <span>cd snow_crab_v1</span>
+              <button class="copy-btn" onclick="copyCode('cdBlock', this)">
+                <i class="fas fa-copy"></i> Copy
+              </button>
+            </div>
+          </div>
+        </li>
+
+        <li>
+          <div>
+            <strong>🔧 Install dependencies</strong><br>
+            Install all required Python packages:
+            <div class="code-block git-code" id="pipBlock">
+              <i class="fas fa-box-open"></i> 
+              <span>pip3 install -r requirements.txt</span>
+              <button class="copy-btn" onclick="copyCode('pipBlock', this)">
+                <i class="fas fa-copy"></i> Copy
+              </button>
+            </div>
+          </div>
+        </li>
+
+        <li>
+          <div>
+            <strong>🚀 Run the tool</strong><br>
+            Start snow_crab_v1:
+            <div class="code-block git-code" id="runBlock">
+              <i class="fas fa-play"></i> 
+              <span>python3 snow_crab_v1.py</span>
+              <button class="copy-btn" onclick="copyCode('runBlock', this)">
+                <i class="fas fa-copy"></i> Copy
+              </button>
+            </div>
+          </div>
+        </li>
+      </ul>
+
+      <div style="background: var(--light-blue); border-radius: 25px; padding: 1rem 1.5rem; margin-top: 1rem; border: 2px dashed var(--blue);">
+        <p style="font-size: 1rem; color: var(--dark-blue);">
+          <i class="fas fa-lightbulb" style="color: var(--yellow);"></i>
+          <strong>Pro tip:</strong> You can also install via pip with <span class="inline-code">pip3 install snow_crab_v1</span> 
+          if you prefer the packaged version.
+        </p>
+      </div>
+    </div>
+
+    <!-- PIP INSTALLATION (ALTERNATIVE) -->
+    <h2 class="fade-in"><i class="fas fa-download"></i> Pip Installation (Alternative)</h2>
+
+    <div class="card fade-in yellow-accent">
+      <p style="font-size: 1.2rem; margin-bottom: 1.2rem;">
+        <i class="fas fa-check-circle" style="color: var(--yellow);"></i> 
+        Prefer a quick install? Use pip with <strong>Python 3.7+</strong>.
+      </p>
+
+      <ul class="step-list">
+        <li>
+          <div>
+            <strong>🐍 Verify Python 3 is installed</strong><br>
+            <div class="code-block" id="pyBlock">
+              <i class="fas fa-terminal"></i> 
+              <span>python3 --version</span>
+              <button class="copy-btn" onclick="copyCode('pyBlock', this)">
+                <i class="fas fa-copy"></i> Copy
+              </button>
+            </div>
+          </div>
+        </li>
+
+        <li>
+          <div>
+            <strong>📦 Install via pip3</strong><br>
+            <div class="code-block" id="pipInstallBlock">
+              <i class="fas fa-box-open"></i> 
+              <span>pip3 install snow_crab_v1</span>
+              <button class="copy-btn" onclick="copyCode('pipInstallBlock', this)">
+                <i class="fas fa-copy"></i> Copy
+              </button>
+            </div>
+          </div>
+        </li>
+
+        <li>
+          <div>
+            <strong>✅ Verify the installation</strong><br>
+            <div class="code-block" id="verifyBlock">
+              <i class="fas fa-check"></i> 
+              <span>snow_crab_v1 --version</span>
+              <button class="copy-btn" onclick="copyCode('verifyBlock', this)">
+                <i class="fas fa-copy"></i> Copy
+              </button>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- KEY FEATURES -->
+    <h2 class="fade-in"><i class="fas fa-star"></i> Key Features</h2>
+    <div class="feature-grid fade-in">
+      <div class="feature-item">
+        <i class="fas fa-robot"></i>
+        <h4>Multi-Platform Bots</h4>
+        <p>Discord, Telegram, Slack, WhatsApp, Signal, iMessage, Google Chat & Web</p>
+      </div>
+      <div class="feature-item">
+        <i class="fas fa-chart-pie"></i>
+        <h4>Web Dashboard</h4>
+        <p>Stunning blue-themed dashboard with bar & pie charts</p>
+      </div>
+      <div class="feature-item">
+        <i class="fas fa-fish"></i>
+        <h4>100+ Phishing Templates</h4>
+        <p>Complete social engineering toolkit</p>
+      </div>
+      <div class="feature-item">
+        <i class="fas fa-terminal"></i>
+        <h4>Network Tools</h4>
+        <p>Ping, Traceroute, Nmap, Netcat, Curl & more</p>
+      </div>
+      <div class="feature-item">
+        <i class="fas fa-bug"></i>
+        <h4>Advanced Keylogger</h4>
+        <p>With exfiltration & screenshot capture</p>
+      </div>
+      <div class="feature-item">
+        <i class="fas fa-shield-virus"></i>
+        <h4>DDoS/DoS Module</h4>
+        <p>Real traffic generation & attack simulation</p>
+      </div>
+      <div class="feature-item">
+        <i class="fas fa-user-secret"></i>
+        <h4>Agent Mode</h4>
+        <p>Remote control & payload deployment</p>
+      </div>
+      <div class="feature-item">
+        <i class="fas fa-key"></i>
+        <h4>Password Cracking</h4>
+        <p>Advanced cracking engine with hashcat</p>
+      </div>
+      <div class="feature-item">
+        <i class="fas fa-network-wired"></i>
+        <h4>ARP Spoofing</h4>
+        <p>Network manipulation & MAC management</p>
+      </div>
+      <div class="feature-item">
+        <i class="fas fa-file-pdf"></i>
+        <h4>PDF Reports</h4>
+        <p>Professional report generation</p>
+      </div>
+      <div class="feature-item">
+        <i class="fas fa-docker"></i>
+        <h4>Docker Security</h4>
+        <p>Container scanning & benchmarking</p>
+      </div>
+      <div class="feature-item">
+        <i class="fas fa-satellite"></i>
+        <h4>Shodan Integration</h4>
+        <p>IoT & device search engine</p>
+      </div>
+    </div>
+
+    <!-- DEPENDENCIES -->
+    <div class="card fade-in red-accent">
+      <h3 style="display: flex; gap: 12px; align-items: center; font-size: 1.8rem; color: var(--dark-red);">
+        <i class="fas fa-cubes"></i> Optional Dependencies
+      </h3>
+      <p style="margin: 1rem 0; font-size: 1.1rem;">
+        Install these for full functionality:
+      </p>
+      <div class="code-block" id="depsBlock" style="font-size: 1rem; flex-direction: column; align-items: flex-start; padding: 1.5rem;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <i class="fas fa-chevron-right" style="color: var(--yellow);"></i>
+          <span>pip3 install colorama cryptography paramiko discord.py telethon</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <i class="fas fa-chevron-right" style="color: var(--yellow);"></i>
+          <span>pip3 install slack-sdk flask flask-socketio flask-cors</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <i class="fas fa-chevron-right" style="color: var(--yellow);"></i>
+          <span>pip3 install scapy shodan qrcode pyshorteners matplotlib seaborn</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <i class="fas fa-chevron-right" style="color: var(--yellow);"></i>
+          <span>pip3 install reportlab pynput dnspython beautifulsoup4 selenium</span>
+        </div>
+        <button class="copy-btn" onclick="copyDeps(this)" style="position: static; margin-top: 1rem; align-self: flex-end;">
+          <i class="fas fa-copy"></i> Copy All
+        </button>
+      </div>
+    </div>
+
+    <!-- WARNING BANNER -->
+    <div class="warning-banner fade-in">
+      <i class="fas fa-triangle-exclamation"></i>
+      <div>
+        <strong>⚠️ Legal Disclaimer:</strong> snow_crab_v1 is designed for authorized security testing, 
+        educational purposes, and ethical hacking only. Unauthorized use against systems you do not own 
+        or have permission to test is illegal. Always follow responsible disclosure practices.
+      </div>
+    </div>
+
+    <!-- SOCIAL MEDIA SECTION -->
+    <h2 class="fade-in"><i class="fas fa-share-alt"></i> Join the crab community</h2>
+    <div class="card fade-in" style="padding: 1.5rem 1rem;">
+      <div class="social-grid">
+        <a href="https://github.com/Accurate-Cyber-Defense" class="social-btn github" target="_blank" aria-label="GitHub">
+          <i class="fab fa-github"></i>
+          <span>GitHub</span>
+        </a>
+        <a href="https://discord.com/invite/DW46bUKX3b" class="social-btn discord" target="_blank" aria-label="Discord">
+          <i class="fab fa-discord"></i>
+          <span>Discord</span>
+        </a>
+        <a href="#" class="social-btn facebook" target="_blank" aria-label="Facebook">
+          <i class="fab fa-facebook-f"></i>
+          <span>Facebook</span>
+        </a>
+        <a href="https://t.me/accuratecyberdefense" class="social-btn telegram" target="_blank" aria-label="Telegram">
+          <i class="fab fa-telegram-plane"></i>
+          <span>Telegram</span>
+        </a>
+        <a href="https://accurate-cyber-defens.slack.com/archives/C0B4JVCRYJ0" class="social-btn slack" target="_blank" aria-label="Slack">
+          <i class="fab fa-slack"></i>
+          <span>Slack</span>
+        </a>
+        <a href="https://www.reddit.com/r/akkuratecyberdefense/" class="social-btn reddit" target="_blank" aria-label="Reddit">
+          <i class="fab fa-reddit-alien"></i>
+          <span>Reddit</span>
+        </a>
+        <a href="#" class="social-btn x" target="_blank" aria-label="X">
+          <i class="fab fa-x-twitter"></i>
+          <span>X</span>
+        </a>
+        <a href="https://www.pinterest.com/accuratecyberdefense/" class="social-btn pinterest" target="_blank" aria-label="Pinterest">
+          <i class="fab fa-pinterest-p"></i>
+          <span>Pinterest</span>
+        </a>
+      </div>
+      <p style="text-align: center; margin-top: 1rem; font-size: 1.1rem; color: var(--dark-blue);">
+        <i class="fas fa-heart" style="color: var(--red);"></i> 
+        Follow us for snow crab updates, tutorials, and cute crustacean content!
+      </p>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+      <p>
+        <span class="crab-wave">🦀</span> 
+        snow_crab_v1 documentation — made with ❄️ a
+        <span class="crab-wave">🦀</span>
+      </p>
+      <p style="margin-top: 0.8rem; font-size: 0.9rem;">
+        <i class="fas fa-copyright"></i> 2026 Ian Carter Kulani· SNOW-CRAB-V1 v1.0.0
+      </p>
+      <p style="margin-top: 0.5rem; font-size: 0.85rem; color: #7aa9c4;">
+        affiliated with real snow crabs. Just a happy cybersecurity tool.
+      </p>
+    </footer>
+  </div>
+
+  <!-- JAVASCRIPT -->
+  <script>
+    (function() {
+      // 1. Create floating bubbles with mixed colors (blue, red, yellow)
+      const bubbleContainer = document.getElementById('bubbleBg');
+      const bubbleCount = 36;
+      const bubbleColors = [
+        'rgba(135, 206, 250, 0.3)',   // light blue
+        'rgba(2, 132, 199, 0.2)',     // blue
+        'rgba(230, 57, 70, 0.15)',    // red
+        'rgba(255, 214, 10, 0.2)',    // yellow
+        'rgba(255, 255, 255, 0.4)'    // white
+      ];
+      for (let i = 0; i < bubbleCount; i++) {
+        const bubble = document.createElement('div');
+        bubble.classList.add('bubble');
+        const size = Math.random() * 110 + 25;
+        bubble.style.width = size + 'px';
+        bubble.style.height = size + 'px';
+        bubble.style.left = Math.random() * 100 + '%';
+        bubble.style.top = Math.random() * 100 + '%';
+        bubble.style.animationDelay = Math.random() * 15 + 's';
+        bubble.style.animationDuration = (Math.random() * 15 + 12) + 's';
+        bubble.style.background = bubbleColors[Math.floor(Math.random() * bubbleColors.length)];
+        bubbleContainer.appendChild(bubble);
+      }
+
+      // 2. Intersection Observer for fade-in effect
+      const fadeElements = document.querySelectorAll('.fade-in');
+      
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15, rootMargin: '0px 0px -20px 0px' });
+
+      fadeElements.forEach(el => observer.observe(el));
+
+      // 3. Social button jiggle on click
+      const socialBtns = document.querySelectorAll('.social-btn');
+      socialBtns.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+          if (this.getAttribute('href') === '#') {
+            e.preventDefault();
+          }
+          this.style.transform = 'scale(0.95) rotate(2deg)';
+          setTimeout(() => {
+            this.style.transform = '';
+          }, 150);
+        });
+      });
+
+      // 4. Fun console messages
+      console.log('%c🦀❄️ snow_crab_v1 documentation loaded!', 'color: #0284c7; font-size: 16px; font-weight: bold;');
+      setTimeout(() => {
+        console.log('%c❄️ Did you know? Snow crabs love cold water and git clone!', 'color: #e63946; font-size: 13px;');
+      }, 2000);
+
+      // 5. Add hover tilt effect to cards
+      const cards = document.querySelectorAll('.card');
+      cards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          const centerX = rect.width / 2;
+          const centerY = rect.height / 2;
+          const rotateX = (y - centerY) / 30;
+          const rotateY = (centerX - x) / 30;
+          card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-5px)`;
+        });
+        card.addEventListener('mouseleave', () => {
+          card.style.transform = '';
+        });
+      });
+    })();
+
+    // ---------- COPY FUNCTIONS ----------
+    function copyCode(blockId, btn) {
+      const block = document.getElementById(blockId);
+      if (!block) return;
+      
+      // Find the text to copy (exclude the button itself)
+      let textToCopy = '';
+      const spans = block.querySelectorAll('span');
+      if (spans.length > 0) {
+        // For blocks with a span, use the span text
+        textToCopy = spans[0].innerText.trim();
+      } else {
+        // Fallback: get text but remove button text
+        const clone = block.cloneNode(true);
+        const btnInClone = clone.querySelector('.copy-btn');
+        if (btnInClone) btnInClone.remove();
+        textToCopy = clone.innerText.trim();
+      }
+      
+      // Remove any leading icon characters
+      textToCopy = textToCopy.replace(/^[▶●]\s*/, '').trim();
+      
+      navigator.clipboard.writeText(textToCopy).then(() => {
+        // Visual feedback
+        const originalHTML = btn.innerHTML;
+        btn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+        btn.classList.add('copied');
+        
+        setTimeout(() => {
+          btn.innerHTML = originalHTML;
+          btn.classList.remove('copied');
+        }, 2000);
+      }).catch(err => {
+        console.error('Copy failed:', err);
+        // Fallback for older browsers
+        const textarea = document.createElement('textarea');
+        textarea.value = textToCopy;
+        document.body.appendChild(textarea);
+        textarea.select();
+        try {
+          document.execCommand('copy');
+          const originalHTML = btn.innerHTML;
+          btn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+          btn.classList.add('copied');
+          setTimeout(() => {
+            btn.innerHTML = originalHTML;
+            btn.classList.remove('copied');
+          }, 2000);
+        } catch (e) {
+          alert('Copy failed. Please copy manually:\n' + textToCopy);
+        }
+        document.body.removeChild(textarea);
+      });
+    }
+
+    function copyDeps(btn) {
+      const depsText = `pip3 install colorama cryptography paramiko discord.py telethon
+pip3 install slack-sdk flask flask-socketio flask-cors
+pip3 install scapy shodan qrcode pyshorteners matplotlib seaborn
+pip3 install reportlab pynput dnspython beautifulsoup4 selenium`;
+      
+      navigator.clipboard.writeText(depsText).then(() => {
+        const originalHTML = btn.innerHTML;
+        btn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.innerHTML = originalHTML;
+          btn.classList.remove('copied');
+        }, 2000);
+      }).catch(err => {
+        alert('Copy failed. Please copy manually:\n\n' + depsText);
+      });
+    }
+  </script>
+</body>
+</html>
